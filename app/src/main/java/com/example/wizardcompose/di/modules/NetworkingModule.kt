@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -19,7 +19,7 @@ object NetworkingModule {
     fun provideRetrofitToCallElixirs(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Endpoints.ENDPOINT_ELIXIR)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
