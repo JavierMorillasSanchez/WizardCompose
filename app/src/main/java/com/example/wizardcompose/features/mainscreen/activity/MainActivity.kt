@@ -1,4 +1,4 @@
-package com.example.wizardcompose
+package com.example.wizardcompose.features.mainscreen.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
