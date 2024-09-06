@@ -24,6 +24,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel.getAllElixirs()
+        /*
+        viewModel.getAllWizards()
+        viewModel.getAllHouses()
+        
+         */
 
         setContent {
             WizardComposeTheme {
