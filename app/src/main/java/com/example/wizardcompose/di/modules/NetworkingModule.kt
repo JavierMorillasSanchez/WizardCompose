@@ -17,7 +17,6 @@ import javax.inject.Singleton
 object NetworkingModule {
 
     @Provides
-    @RetrofitElixirs
     fun provideRetrofitToCallElixirs(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Endpoints.ENDPOINT_ELIXIR)
@@ -26,7 +25,6 @@ object NetworkingModule {
     }
 
     @Provides
-    @RetrofitWizards
     fun provideRetrofitToCallWizards(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Endpoints.ENDPOINT_WIZARDS)
@@ -35,7 +33,6 @@ object NetworkingModule {
     }
 
     @Provides
-    @RetrofitHouses
     fun provideRetrofitToCallHouses(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Endpoints.ENDPOINT_HOUSES)
@@ -45,24 +42,20 @@ object NetworkingModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitElixirService(@RetrofitElixirs retrofit: Retrofit): RetrofitElixirService {
+    fun provideRetrofitElixirService(retrofit: Retrofit): RetrofitElixirService {
         return retrofit.create(RetrofitElixirService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideRetrofitWizardService(@RetrofitWizards retrofit: Retrofit): RetrofitWizardService {
+    fun provideRetrofitWizardService(retrofit: Retrofit): RetrofitWizardService {
         return retrofit.create(RetrofitWizardService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideRetrofitHouseService(@RetrofitHouses retrofit: Retrofit): RetrofitHouseService {
+    fun provideRetrofitHouseService(retrofit: Retrofit): RetrofitHouseService {
         return retrofit.create(RetrofitHouseService::class.java)
     }
 
 }
-
-annotation class RetrofitElixirs
-annotation class RetrofitWizards
-annotation class RetrofitHouses
