@@ -1,4 +1,4 @@
-package com.example.wizardcompose.calls.allelixirs
+package com.example.wizardcompose.calls.allhouses
 
 import com.example.wizardcompose.dataclasses.houseclasses.House
 import com.example.wizardcompose.utils.Endpoints
