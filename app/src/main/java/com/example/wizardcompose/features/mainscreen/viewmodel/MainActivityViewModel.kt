@@ -81,7 +81,20 @@ class MainActivityViewModel @Inject constructor(
 
             val result = elixirRepository.getAllElixirs()
 
-            Log.d(logTag, "Elixir con ID ${result.body()?.get(0)} -> ${result.body()?.get(0)?.name}")
+            if(result.isSuccessful){
+
+                for((index, elixir) in result.body()!!.withIndex()){
+
+                    elixirList.add(elixir)
+
+                    Log.d(logTag, "Elixir guardado -> ${elixirList.get(index).name} " +
+                            "con ID ${elixirList.get(index).id}")
+
+                    if(index == result.body()!!.size){
+                        elixirListPrepared.postValue(true)
+                    }
+                }
+            }
 
 
         }
@@ -100,19 +113,22 @@ class MainActivityViewModel @Inject constructor(
         scope.launch(errorHandler){
 
             val result = wizardRepository.getAllWizards()
+
             if(result.isSuccessful){
 
-                for(wizard in result.body()!!){
+                for((index, wizard) in result.body()!!.withIndex()){
 
-                    Log.d(logTag, "Mago recibido -> ${wizard.firstName} ${wizard.lastName}")
+                    wizardList.add(wizard)
 
+                    Log.d(logTag, "Mago guardado -> ${wizardList.get(index).firstName} " +
+                            "${wizardList.get(index).lastName} " +
+                            "con ID ${wizardList.get(index).id}")
 
+                    if(index == result.body()!!.size){
+                        wizardListPrepared.postValue(true)
+                    }
                 }
-
             }
-
-            Log.d(logTag, "Mago con ID ${result.body()?.get(0)} -> ${result.body()?.get(0)?.firstName} ${result.body()?.get(0)?.lastName}")
-
         }
     }
 
@@ -130,8 +146,20 @@ class MainActivityViewModel @Inject constructor(
 
             val result = houseRepository.getAllHouses()
 
-            Log.d(logTag, "Casa con ID ${result.body()?.get(0)} -> ${result.body()?.get(0)?.name}")
+            if(result.isSuccessful){
 
+                for((index, house) in result.body()!!.withIndex()){
+
+                    houseList.add(house)
+
+                    Log.d(logTag, "Casa guardada -> ${houseList.get(index).name} " +
+                            "con ID ${houseList.get(index).id}")
+
+                    if(index == result.body()!!.size){
+                        houseListPrepared.postValue(true)
+                    }
+                }
+            }
         }
     }
 
