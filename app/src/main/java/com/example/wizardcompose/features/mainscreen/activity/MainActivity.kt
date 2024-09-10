@@ -58,29 +58,23 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
     override fun startListeningToViewModel(){
 
         this.viewModel.observeWizardListPreparedValue().observe(this, Observer<Boolean> {
-            if (it != null) {
-                if(this.viewModel.observeWizardListPreparedValue().value == true){
-                    this.wizardList.addAll(this.viewModel.getAllWizardsList())
-                    Log.d(logTag, "Cantidad de Magos recibidos ${this.wizardList.size}")
-                }
+            if(this.viewModel.observeWizardListPreparedValue().value == true){
+                this.wizardList.addAll(this.viewModel.getAllWizardsList())
+                Log.d(logTag, "Cantidad de Magos recibidos ${this.wizardList.size}")
             }
         })
 
         this.viewModel.observeHouseListPreparedValue().observe(this, Observer<Boolean> {
-            if (it != null) {
-                if(this.viewModel.observeHouseListPreparedValue().value == true){
-                    this.houseList.addAll(this.viewModel.getAllHouseList())
-                    Log.d(logTag, "Cantidad de Casas recibidos ${this.houseList.size}")
-                }
+            if(this.viewModel.observeHouseListPreparedValue().value == true){
+                this.houseList.addAll(this.viewModel.getAllHouseList())
+                Log.d(logTag, "Cantidad de Casas recibidos ${this.houseList.size}")
             }
         })
 
         this.viewModel.observeElixirListPreparedValue().observe(this, Observer<Boolean> {
-            if (it != null) {
-                if(this.viewModel.observeElixirListPreparedValue().value == true){
-                    this.elixirList.addAll(this.viewModel.getAllElixirList())
-                    Log.d(logTag, "Cantidad de Elixires recibidos ${this.elixirList.size}")
-                }
+            if(this.viewModel.observeElixirListPreparedValue().value == true){
+                this.elixirList.addAll(this.viewModel.getAllElixirList())
+                Log.d(logTag, "Cantidad de Elixires recibidos ${this.elixirList.size}")
             }
         })
 
