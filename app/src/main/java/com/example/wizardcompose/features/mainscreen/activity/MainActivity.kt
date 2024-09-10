@@ -61,6 +61,7 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
             if(this.viewModel.observeWizardListPreparedValue().value == true){
                 this.wizardList.addAll(this.viewModel.getAllWizardsList())
                 Log.d(logTag, "Cantidad de Magos recibidos ${this.wizardList.size}")
+                prepareWizardListToShow()
             }
         })
 
@@ -68,6 +69,7 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
             if(this.viewModel.observeHouseListPreparedValue().value == true){
                 this.houseList.addAll(this.viewModel.getAllHouseList())
                 Log.d(logTag, "Cantidad de Casas recibidos ${this.houseList.size}")
+                prepareHouseListToShow()
             }
         })
 
@@ -75,14 +77,22 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
             if(this.viewModel.observeElixirListPreparedValue().value == true){
                 this.elixirList.addAll(this.viewModel.getAllElixirList())
                 Log.d(logTag, "Cantidad de Elixires recibidos ${this.elixirList.size}")
+                prepareElixirListToShow()
             }
         })
 
-        prepareListsToShow()
     }
 
-    override fun prepareListsToShow() {
-        Toast.makeText(this, "Mostramos los listados.",Toast.LENGTH_SHORT).show()
+    override fun prepareWizardListToShow() {
+        Toast.makeText(this, "Mostramos los Magos.",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun prepareHouseListToShow() {
+        Toast.makeText(this, "Mostramos las Casas.",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun prepareElixirListToShow() {
+        Toast.makeText(this, "Mostramos los Elixires.",Toast.LENGTH_SHORT).show()
     }
 
 }
