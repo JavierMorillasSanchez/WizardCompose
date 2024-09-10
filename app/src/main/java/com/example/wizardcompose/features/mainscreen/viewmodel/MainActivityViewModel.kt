@@ -83,20 +83,13 @@ class MainActivityViewModel @Inject constructor(
 
             if(result.isSuccessful){
 
-                for((index, elixir) in result.body()!!.withIndex()){
+                elixirList.addAll(result.body()!!)
 
-                    elixirList.add(elixir)
-
-                    Log.d(logTag, "Elixir guardado -> ${elixirList.get(index).name} " +
-                            "con ID ${elixirList.get(index).id}")
-
-                    if(index == result.body()!!.size){
-                        elixirListPrepared.postValue(true)
-                    }
+                if(elixirList.isNotEmpty()){
+                    elixirListPrepared.value = true
+                    Log.d(logTag, "Casas preparadas -> ${elixirListPrepared.value}")
                 }
             }
-
-
         }
     }
 
@@ -116,17 +109,11 @@ class MainActivityViewModel @Inject constructor(
 
             if(result.isSuccessful){
 
-                for((index, wizard) in result.body()!!.withIndex()){
+                wizardList.addAll(result.body()!!)
 
-                    wizardList.add(wizard)
-
-                    Log.d(logTag, "Mago guardado -> ${wizardList.get(index).firstName} " +
-                            "${wizardList.get(index).lastName} " +
-                            "con ID ${wizardList.get(index).id}")
-
-                    if(index == result.body()!!.size){
-                        wizardListPrepared.postValue(true)
-                    }
+                if(wizardList.isNotEmpty()){
+                    wizardListPrepared.value = true
+                    Log.d(logTag, "Magos preparados -> ${wizardListPrepared.value}")
                 }
             }
         }
@@ -148,16 +135,11 @@ class MainActivityViewModel @Inject constructor(
 
             if(result.isSuccessful){
 
-                for((index, house) in result.body()!!.withIndex()){
+                houseList.addAll(result.body()!!)
 
-                    houseList.add(house)
-
-                    Log.d(logTag, "Casa guardada -> ${houseList.get(index).name} " +
-                            "con ID ${houseList.get(index).id}")
-
-                    if(index == result.body()!!.size){
-                        houseListPrepared.postValue(true)
-                    }
+                if(houseList.isNotEmpty()){
+                    houseListPrepared.value = true
+                    Log.d(logTag, "Casas preparadas -> ${houseListPrepared.value}")
                 }
             }
         }
