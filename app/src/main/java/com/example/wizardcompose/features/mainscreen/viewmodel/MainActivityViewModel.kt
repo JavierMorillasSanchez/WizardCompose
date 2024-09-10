@@ -101,7 +101,14 @@ class MainActivityViewModel @Inject constructor(
 
             val result = wizardRepository.getAllWizards()
             if(result.isSuccessful){
-                wizardListPrepared.postValue(true)
+
+                for(wizard in result.body()!!){
+
+                    Log.d(logTag, "Mago recibido -> ${wizard.firstName} ${wizard.lastName}")
+
+
+                }
+
             }
 
             Log.d(logTag, "Mago con ID ${result.body()?.get(0)} -> ${result.body()?.get(0)?.firstName} ${result.body()?.get(0)?.lastName}")
