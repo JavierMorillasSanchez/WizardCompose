@@ -15,16 +15,12 @@ import javax.inject.Singleton
 object NetworkHouseModule {
 
     @Provides
-    fun provideRetrofitToCallHouses(): Retrofit {
+    fun provideRetrofitToCallHouses(): RetrofitHouseService {
         return Retrofit.Builder()
             .baseUrl(Endpoints.ENDPOINT_HOUSES)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+            .create(RetrofitHouseService::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideRetrofitHouseService(retrofit: Retrofit): RetrofitHouseService {
-        return retrofit.create(RetrofitHouseService::class.java)
-    }
 }

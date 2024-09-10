@@ -15,17 +15,12 @@ import javax.inject.Singleton
 object NetworkWizardModule {
 
     @Provides
-    fun provideRetrofitToCallWizards(): Retrofit {
+    fun provideRetrofitToCallWizards(): RetrofitWizardService {
         return Retrofit.Builder()
             .baseUrl(Endpoints.ENDPOINT_WIZARDS)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRetrofitWizardService(retrofit: Retrofit): RetrofitWizardService {
-        return retrofit.create(RetrofitWizardService::class.java)
+            .create(RetrofitWizardService::class.java)
     }
 
 }

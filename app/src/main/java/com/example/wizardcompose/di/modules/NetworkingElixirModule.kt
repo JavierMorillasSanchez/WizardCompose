@@ -15,17 +15,12 @@ import javax.inject.Singleton
 object NetworkingElixirModule {
 
     @Provides
-    fun provideRetrofitToCallElixirs(): Retrofit {
+    fun provideRetrofitToCallElixirs(): RetrofitElixirService {
         return Retrofit.Builder()
             .baseUrl(Endpoints.ENDPOINT_ELIXIR)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRetrofitElixirService(retrofit: Retrofit): RetrofitElixirService {
-        return retrofit.create(RetrofitElixirService::class.java)
+            .create(RetrofitElixirService::class.java)
     }
 
 }
