@@ -45,13 +45,13 @@ class MainActivityViewModel @Inject constructor(
 
     }
 
-    override fun observeWizardListPreparedValue(): MutableLiveData <Boolean> {
+    override fun getWizardListPreparedValue(): MutableLiveData <Boolean> {
         return this.wizardListPrepared
     }
-    override fun observeElixirListPreparedValue(): MutableLiveData <Boolean> {
+    override fun getElixirListPreparedValue(): MutableLiveData <Boolean> {
         return this.elixirListPrepared
     }
-    override fun observeHouseListPreparedValue(): MutableLiveData <Boolean> {
+    override fun getHouseListPreparedValue(): MutableLiveData <Boolean> {
         return this.houseListPrepared
     }
 
@@ -86,7 +86,7 @@ class MainActivityViewModel @Inject constructor(
                 elixirList.addAll(result.body()!!)
 
                 if(elixirList.isNotEmpty()){
-                    elixirListPrepared.value = true
+                    elixirListPrepared.postValue(true)
                     Log.d(logTag, "Casas preparadas -> ${elixirListPrepared.value}")
                 }
             }
@@ -112,7 +112,7 @@ class MainActivityViewModel @Inject constructor(
                 wizardList.addAll(result.body()!!)
 
                 if(wizardList.isNotEmpty()){
-                    wizardListPrepared.value = true
+                    wizardListPrepared.postValue(true)
                     Log.d(logTag, "Magos preparados -> ${wizardListPrepared.value}")
                 }
             }
@@ -138,7 +138,7 @@ class MainActivityViewModel @Inject constructor(
                 houseList.addAll(result.body()!!)
 
                 if(houseList.isNotEmpty()){
-                    houseListPrepared.value = true
+                    houseListPrepared.postValue(true)
                     Log.d(logTag, "Casas preparadas -> ${houseListPrepared.value}")
                 }
             }

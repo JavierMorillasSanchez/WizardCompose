@@ -7,9 +7,9 @@ import com.example.wizardcompose.dataclasses.wizardclasses.Wizard
 
 interface MainActivityViewModelInterface {
     fun initiateViewModel()
-    fun observeWizardListPreparedValue(): MutableLiveData<Boolean>
-    fun observeElixirListPreparedValue(): MutableLiveData<Boolean>
-    fun observeHouseListPreparedValue(): MutableLiveData<Boolean>
+    fun getWizardListPreparedValue(): MutableLiveData<Boolean>
+    fun getElixirListPreparedValue(): MutableLiveData<Boolean>
+    fun getHouseListPreparedValue(): MutableLiveData<Boolean>
     fun getAllWizardsList(): ArrayList<Wizard>
     fun getAllElixirList(): ArrayList<Elixir>
     fun getAllHouseList(): ArrayList<House>

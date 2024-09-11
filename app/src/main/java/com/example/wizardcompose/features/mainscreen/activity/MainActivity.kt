@@ -32,6 +32,10 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
     private var houseList: ArrayList<House> = arrayListOf()
     private var elixirList: ArrayList<Elixir> = arrayListOf()
 
+    /**
+     Lo siguientes objetos se van a usar para hacer pruebas
+     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,29 +56,29 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
 
     override fun initiateViewModel(){
         this.viewModel.initiateViewModel()
-        startListeningToViewModel()
+        startObservingToViewModel()
     }
 
-    override fun startListeningToViewModel(){
+    override fun startObservingToViewModel(){
 
-        this.viewModel.observeWizardListPreparedValue().observe(this, Observer<Boolean> {
-            if(this.viewModel.observeWizardListPreparedValue().value == true){
+        this.viewModel.getWizardListPreparedValue().observe(this, Observer<Boolean> {
+            if(this.viewModel.getWizardListPreparedValue().value == true){
                 this.wizardList.addAll(this.viewModel.getAllWizardsList())
                 Log.d(logTag, "Cantidad de Magos recibidos ${this.wizardList.size}")
                 prepareWizardListToShow()
             }
         })
 
-        this.viewModel.observeHouseListPreparedValue().observe(this, Observer<Boolean> {
-            if(this.viewModel.observeHouseListPreparedValue().value == true){
+        this.viewModel.getHouseListPreparedValue().observe(this, Observer<Boolean> {
+            if(this.viewModel.getHouseListPreparedValue().value == true){
                 this.houseList.addAll(this.viewModel.getAllHouseList())
                 Log.d(logTag, "Cantidad de Casas recibidos ${this.houseList.size}")
                 prepareHouseListToShow()
             }
         })
 
-        this.viewModel.observeElixirListPreparedValue().observe(this, Observer<Boolean> {
-            if(this.viewModel.observeElixirListPreparedValue().value == true){
+        this.viewModel.getElixirListPreparedValue().observe(this, Observer<Boolean> {
+            if(this.viewModel.getElixirListPreparedValue().value == true){
                 this.elixirList.addAll(this.viewModel.getAllElixirList())
                 Log.d(logTag, "Cantidad de Elixires recibidos ${this.elixirList.size}")
                 prepareElixirListToShow()
