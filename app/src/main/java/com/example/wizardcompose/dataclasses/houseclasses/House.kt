@@ -4,23 +4,23 @@ import com.google.gson.annotations.SerializedName
 
 data class House(
     @SerializedName("id")
-    val id: String,
+    val id: String?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("houseColours")
-    val houseColours: String,
+    val houseColours: String?,
     @SerializedName("founder")
-    val founder: String,
+    val founder: String?,
     @SerializedName("animal")
-    val animal: String,
+    val animal: String?,
     @SerializedName("element")
-    val element: String,
+    val element: String?,
     @SerializedName("ghost")
-    val ghost: String,
+    val ghost: String?,
     @SerializedName("commonRoom")
-    val commonRoom: String,
+    val commonRoom: String?,
     @SerializedName("heads")
-    val heads: List<Head>,
+    val heads: List<Head> = emptyList(),
     @SerializedName("traits")
-    val traits: List<Trait>
+    val traits: List<Trait> = emptyList()
 )

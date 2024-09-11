@@ -15,7 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Observer
 import com.example.wizardcompose.dataclasses.elixirclasses.Elixir
+import com.example.wizardcompose.dataclasses.elixirclasses.Ingredient
+import com.example.wizardcompose.dataclasses.elixirclasses.Inventor
+import com.example.wizardcompose.dataclasses.houseclasses.Head
 import com.example.wizardcompose.dataclasses.houseclasses.House
+import com.example.wizardcompose.dataclasses.houseclasses.Trait
 import com.example.wizardcompose.dataclasses.wizardclasses.Wizard
 import com.example.wizardcompose.features.mainscreen.viewmodel.MainActivityViewModel
 import com.example.wizardcompose.ui.theme.WizardComposeTheme
@@ -33,7 +37,82 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
     private var elixirList: ArrayList<Elixir> = arrayListOf()
 
     /**
-     Lo siguientes objetos se van a usar para hacer pruebas
+     Los siguientes objetos se van a usar para hacer pruebas
+     */
+
+    private val sampleIngredientObject = Ingredient(
+        "97128d90-bf57-49e5-b314-417baddb2d78",
+        "Nagini's venom"
+    )
+
+    private val sampleInventorObject = Inventor(
+        "9b528a63-0a01-4b91-992d-9afed9b841e7",
+        "Linfred",
+        "of Stinchcombe"
+    )
+
+    private val sampleHeadObject = Head(
+        "530da97d-5a83-4ea6-bc15-790edf5b5efc",
+        "Minerva",
+        "McGonagall"
+    )
+
+    private val sampleTraitObject = Trait(
+        "1773bce8-7a22-4d57-b8e1-7e1cbe26fa2b",
+        "Courage"
+    )
+
+
+    private val sampleElixirObject = Elixir(
+        "d14ca162-df3f-4053-a3c9-58de82041646",
+        "Kissing Concoction",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    )
+
+    private val sampleHeadArray = arrayListOf<Head>(
+        sampleHeadObject,
+        sampleHeadObject,
+        sampleHeadObject
+    )
+
+    private val sampleElixirArray = arrayListOf<Elixir>(
+        sampleElixirObject,
+        sampleElixirObject,
+        sampleElixirObject
+    )
+
+    private val sampleTraitArray = arrayListOf<Trait>(
+        sampleTraitObject,
+        sampleTraitObject,
+        sampleTraitObject
+    )
+
+    private val sampleHouseObject = House(
+        "0367baf3-1cb6-4baf-bede-48e17e1cd005",
+        "Gryffindor",
+        "Scarlet and gold",
+        "Godric Gryffindor",
+        "Lion",
+        "Fire",
+        "Nearly-Headless Nick",
+        "Gryffindor Tower",
+        sampleHeadArray
+    )
+
+    private val sampleWizardObject = Wizard(
+        "118e7366-1c65-4275-8121-8f6c553e5783",
+        "Fred",
+        "Weasley",
+        sampleElixirArray
+    )
+
+    /**
+     * Eliminar objetos de prueba
      */
 
     override fun onCreate(savedInstanceState: Bundle?) {
