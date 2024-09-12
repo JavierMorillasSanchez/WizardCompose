@@ -18,7 +18,7 @@ import com.example.wizardcompose.dataclasses.houseclasses.Head
 import com.example.wizardcompose.dataclasses.houseclasses.House
 import com.example.wizardcompose.dataclasses.houseclasses.Trait
 import com.example.wizardcompose.dataclasses.wizardclasses.Wizard
-import com.example.wizardcompose.features.mainscreen.uimainscreen.mainActivityComposeUIGenerator
+import com.example.wizardcompose.features.mainscreen.uimainscreen.MainActivityComposeUIGenerator
 import com.example.wizardcompose.features.mainscreen.viewmodel.MainActivityViewModel
 import com.example.wizardcompose.ui.theme.WizardComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -124,7 +124,7 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
                     Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    mainActivityComposeUIGenerator()
+                    MainActivityComposeUIGenerator()
                 }
             }
         }
