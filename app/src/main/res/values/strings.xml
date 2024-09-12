@@ -3,4 +3,8 @@
     <string name="the_four_houses_title">Las 4 Casas</string>
     <string name="renamed_wizards_title">MAGOS RECONOCIDOS</string>
     <string name="elixirs_title">ELIXIRES</string>
+    <string name="wizard_name">Nombre Mago</string>
+    <string name="wizard_surname">Apellido Mago</string>
+    <string name="number_of_elixirs_title">Cantidad de Elixires:</string>
+    <string name="number_of_elixirs">0</string>
 </resources>

@@ -1,13 +1,19 @@
 package com.example.wizardcompose.features.mainscreen.uimainscreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -147,9 +153,80 @@ fun LoadAllElixirs(){
                 textAlign = TextAlign.Center,
                 fontSize = 30.sp
             )
-            
+
         }
     }
+}
+
+@Composable
+fun CustomWizardCell(){
+
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .background(color = Color.White)
+            .border(1.dp, Color.Black, shape = RoundedCornerShape(8.dp))
+    ) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+
+            Row {
+
+                Text(text = stringResource(id = R.string.wizard_name),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(end = 15.dp)
+                )
+
+                Text(text = stringResource(id = R.string.wizard_surname),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp
+                )
+            }
+
+            Row {
+
+                Text(text = stringResource(id = R.string.number_of_elixirs_title),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(end = 15.dp)
+                )
+
+                Text(text = stringResource(id = R.string.number_of_elixirs),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(end = 15.dp)
+                )
+
+            }
+
+        }
+    }
+}
+
+@Composable
+fun CustomElixirCell(){
+
+
+
+
+
+}
+
+@Composable
+@Preview(showSystemUi = true)
+fun PreviewCustomWizardCell(){
+    CustomWizardCell()
+}
+
+@Composable
+@Preview(showSystemUi = true)
+fun PreviewCustomElixirCell(){
+    CustomElixirCell()
 }
 
 @Composable
