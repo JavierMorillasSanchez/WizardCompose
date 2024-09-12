@@ -9,10 +9,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.Observer
 import com.example.wizardcompose.dataclasses.elixirclasses.Elixir
 import com.example.wizardcompose.dataclasses.elixirclasses.Ingredient
@@ -21,6 +18,7 @@ import com.example.wizardcompose.dataclasses.houseclasses.Head
 import com.example.wizardcompose.dataclasses.houseclasses.House
 import com.example.wizardcompose.dataclasses.houseclasses.Trait
 import com.example.wizardcompose.dataclasses.wizardclasses.Wizard
+import com.example.wizardcompose.features.mainscreen.uimainscreen.mainActivityComposeUIGenerator
 import com.example.wizardcompose.features.mainscreen.viewmodel.MainActivityViewModel
 import com.example.wizardcompose.ui.theme.WizardComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -122,12 +120,11 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
 
         setContent {
             WizardComposeTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    mainActivityComposeUIGenerator()
                 }
             }
         }
@@ -178,20 +175,4 @@ class MainActivity : ComponentActivity(), MainActivityInterface {
         Toast.makeText(this, "Mostramos los Elixires.",Toast.LENGTH_SHORT).show()
     }
 
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun GreetingPreview() {
-    WizardComposeTheme {
-        Greeting("Android")
-    }
 }
