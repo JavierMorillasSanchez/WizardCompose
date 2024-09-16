@@ -1,35 +1,49 @@
 package com.example.wizardcompose.features.mainscreen.uimainscreen
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.wizardcompose.R
+import com.example.wizardcompose.dataclasses.elixirclasses.Elixir
+import com.example.wizardcompose.dataclasses.wizardclasses.Wizard
+import com.example.wizardcompose.features.mainscreen.viewmodel.MainActivityViewModel
 
 @Composable
-fun MainActivityComposeUIGenerator(){
+fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Context){
+
+    val wizardList = remember { mutableStateListOf<Wizard>() }
+    val isWizardListPrepared = viewModel.getWizardListPreparedValue().observeAsState(initial = false)
+
+    val elixirList = remember { mutableStateListOf<Elixir>() }
+    val isElixirListPrepared = viewModel.getElixirListPreparedValue().observeAsState(initial = false)
 
     LazyColumn(
         Modifier.fillMaxSize())
@@ -45,7 +59,14 @@ fun MainActivityComposeUIGenerator(){
                     .padding(16.dp)
             )
 
-            LoadCoatOfArmsFromEachHouse()
+            Text(text = stringResource(id = R.string.the_four_houses_title),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                fontSize = 40.sp
+            )
+
+            LoadCoatOfArmsFromEachHouse(viewModel, context)
 
             Divider(
                 color = Color.Black,
@@ -55,7 +76,21 @@ fun MainActivityComposeUIGenerator(){
                     .padding(16.dp)
             )
 
-            LoadAllWizards()
+            Text(text = stringResource(id = R.string.renamed_wizards_title),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                fontSize = 30.sp
+            )
+
+            if (isWizardListPrepared.value) {
+
+                if(wizardList.isEmpty()){
+                    wizardList.addAll(viewModel.getAllWizardsList())
+                }
+
+                LoadAllWizards(wizardList)
+            }
 
             Divider(
                 color = Color.Black,
@@ -65,16 +100,30 @@ fun MainActivityComposeUIGenerator(){
                     .padding(16.dp)
             )
 
-            LoadAllElixirs()
+            Text(text = stringResource(id = R.string.elixirs_title),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                fontSize = 30.sp
+            )
+
+            if (isElixirListPrepared.value) {
+
+                if(elixirList.isEmpty()){
+                    elixirList.addAll(viewModel.getAllElixirList())
+                }
+
+                LoadAllElixirs(elixirList)
+            }
+
         }
-
 
     }
 
 }
 
 @Composable
-fun LoadCoatOfArmsFromEachHouse(){
+fun LoadCoatOfArmsFromEachHouse(viewModel: MainActivityViewModel, context: Context){
 
     val imageList = listOf(
         R.drawable.griffindor_logo,
@@ -86,13 +135,6 @@ fun LoadCoatOfArmsFromEachHouse(){
     Box(modifier = Modifier.fillMaxWidth()) {
 
         Column(Modifier.fillMaxWidth()) {
-            
-            Text(text = stringResource(id = R.string.the_four_houses_title),
-            modifier = Modifier
-                .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                fontSize = 40.sp
-            )
 
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -113,6 +155,16 @@ fun LoadCoatOfArmsFromEachHouse(){
                                     modifier = Modifier
                                         .padding(16.dp)
                                         .weight(1f)
+                                        .background(Color.Transparent)
+                                        .clickable {
+                                            Toast
+                                                .makeText(
+                                                    context,
+                                                    "Navegamos a las casas",
+                                                    Toast.LENGTH_SHORT
+                                                )
+                                                .show()
+                                        }
                                 )
                             }
                         }
@@ -125,48 +177,60 @@ fun LoadCoatOfArmsFromEachHouse(){
 }
 
 @Composable
-fun LoadAllWizards(){
+fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>) {
+
     Box(modifier = Modifier.fillMaxWidth()) {
 
-        Column(Modifier.fillMaxWidth()) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())) {
 
-            Text(text = stringResource(id = R.string.renamed_wizards_title),
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                fontSize = 30.sp
-            )
+                for (wizard in wizardList.take(9)){
+                    CustomWizardCell(
+                        wizardName = wizard.firstName,
+                        wizardSurname = wizard.lastName,
+                        amountOfElixirs = wizard.elixirs.size
+                    )
+                }
+        }
+    }
 
+}
+
+@Composable
+fun LoadAllElixirs(elixirList: SnapshotStateList<Elixir>) {
+
+    Box(modifier = Modifier.fillMaxWidth()) {
+
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())) {
+
+            for (elixir in elixirList.take(9)){
+                CustomElixirCell(
+                    elixirName = elixir.name,
+                    elixirEffect = elixir.effect
+                )
+            }
         }
     }
 }
 
 @Composable
-fun LoadAllElixirs(){
-    Box(modifier = Modifier.fillMaxWidth()) {
-
-        Column(Modifier.fillMaxWidth()) {
-
-            Text(text = stringResource(id = R.string.elixirs_title),
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                fontSize = 30.sp
-            )
-
-        }
-    }
-}
-
-@Composable
-fun CustomWizardCell(){
+fun CustomWizardCell(
+    wizardName: String?,
+    wizardSurname: String?,
+    amountOfElixirs: Int?
+){
 
     Box(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth()
             .background(color = Color.White)
-            .border(1.dp, Color.Black, shape = RoundedCornerShape(8.dp))
+            .border(1.dp, Color.Red, shape = RoundedCornerShape(8.dp))
     ) {
         Column(
             Modifier
@@ -176,13 +240,13 @@ fun CustomWizardCell(){
 
             Row {
 
-                Text(text = stringResource(id = R.string.wizard_name),
+                Text(text = wizardName ?: "",
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
                     modifier = Modifier.padding(end = 15.dp)
                 )
 
-                Text(text = stringResource(id = R.string.wizard_surname),
+                Text(text = wizardSurname ?: "",
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp
                 )
@@ -196,7 +260,7 @@ fun CustomWizardCell(){
                     modifier = Modifier.padding(end = 15.dp)
                 )
 
-                Text(text = stringResource(id = R.string.number_of_elixirs),
+                Text(text = let { amountOfElixirs.toString() },
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
                     modifier = Modifier.padding(end = 15.dp)
@@ -209,28 +273,50 @@ fun CustomWizardCell(){
 }
 
 @Composable
-fun CustomElixirCell(){
+fun CustomElixirCell(
+    elixirName: String?,
+    elixirEffect: String?,
+){
 
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
+            .background(color = Color.White)
+            .border(1.dp, Color.Green, shape = RoundedCornerShape(8.dp))
+    ) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
 
+            Row {
 
+                Text(text = elixirName ?: "Sin nombre.",
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(end = 15.dp)
+                )
+            }
 
+            Row {
 
-}
+                Text(text = stringResource(id = R.string.elixir_effect_title),
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(end = 15.dp)
+                )
 
-@Composable
-@Preview(showSystemUi = true)
-fun PreviewCustomWizardCell(){
-    CustomWizardCell()
-}
+                Text(text = elixirEffect ?: "Sin descripción",
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(end = 15.dp)
+                )
 
-@Composable
-@Preview(showSystemUi = true)
-fun PreviewCustomElixirCell(){
-    CustomElixirCell()
-}
+            }
 
-@Composable
-@Preview(showSystemUi = true)
-fun PreviewMainActivityComposeUIGenerator(){
-    MainActivityComposeUIGenerator()
+        }
+    }
+
 }

@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">WizardCompose</string>
     <string name="the_four_houses_title">Las 4 Casas</string>
-    <string name="renamed_wizards_title">MAGOS RECONOCIDOS</string>
-    <string name="elixirs_title">ELIXIRES</string>
+    <string name="renamed_wizards_title">Magos Reconocidos</string>
+    <string name="elixirs_title">Elixires</string>
     <string name="wizard_name">Nombre Mago</string>
     <string name="wizard_surname">Apellido Mago</string>
     <string name="number_of_elixirs_title">Cantidad de Elixires:</string>
     <string name="number_of_elixirs">0</string>
+    <string name="elixir_name">Nombre elixir</string>
+    <string name="elixir_effect_title">Efecto:</string>
+    <string name="elixir_effect_description">descripción</string>
 </resources>
