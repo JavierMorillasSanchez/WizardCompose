@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,18 +28,26 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.wizardcompose.R
 import com.example.wizardcompose.dataclasses.elixirclasses.Elixir
+import com.example.wizardcompose.dataclasses.houseclasses.House
 import com.example.wizardcompose.dataclasses.wizardclasses.Wizard
 import com.example.wizardcompose.features.mainscreen.viewmodel.MainActivityViewModel
 
 @Composable
 fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Context){
+
+    val houseList = remember { mutableStateListOf<House>() }
+    val isHouseListPrepared = viewModel.getHouseListPreparedValue().observeAsState(initial = false)
 
     val wizardList = remember { mutableStateListOf<Wizard>() }
     val isWizardListPrepared = viewModel.getWizardListPreparedValue().observeAsState(initial = false)
@@ -66,7 +76,7 @@ fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Co
                 fontSize = 40.sp
             )
 
-            LoadCoatOfArmsFromEachHouse(viewModel, context)
+            LoadCoatOfArmsFromEachHouse(houseList, context)
 
             Divider(
                 color = Color.Black,
@@ -89,7 +99,7 @@ fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Co
                     wizardList.addAll(viewModel.getAllWizardsList())
                 }
 
-                LoadAllWizards(wizardList)
+                LoadAllWizards(wizardList, context)
             }
 
             Divider(
@@ -113,7 +123,7 @@ fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Co
                     elixirList.addAll(viewModel.getAllElixirList())
                 }
 
-                LoadAllElixirs(elixirList)
+                LoadAllElixirs(elixirList, context)
             }
 
         }
@@ -123,7 +133,7 @@ fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Co
 }
 
 @Composable
-fun LoadCoatOfArmsFromEachHouse(viewModel: MainActivityViewModel, context: Context){
+fun LoadCoatOfArmsFromEachHouse(houseList: SnapshotStateList<House>, context: Context){
 
     val imageList = listOf(
         R.drawable.griffindor_logo,
@@ -177,7 +187,7 @@ fun LoadCoatOfArmsFromEachHouse(viewModel: MainActivityViewModel, context: Conte
 }
 
 @Composable
-fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>) {
+fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>, context: Context) {
 
     Box(modifier = Modifier.fillMaxWidth()) {
 
@@ -186,12 +196,16 @@ fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>) {
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())) {
 
-                for (wizard in wizardList.take(9)){
+                for ((index, wizard) in wizardList.take(9).withIndex()){
                     CustomWizardCell(
                         wizardName = wizard.firstName,
                         wizardSurname = wizard.lastName,
                         amountOfElixirs = wizard.elixirs.size
                     )
+
+                    if(index == 8){
+                        NavigateToFullListCell(context = context, showMoreWizards = true)
+                    }
                 }
         }
     }
@@ -199,7 +213,7 @@ fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>) {
 }
 
 @Composable
-fun LoadAllElixirs(elixirList: SnapshotStateList<Elixir>) {
+fun LoadAllElixirs(elixirList: SnapshotStateList<Elixir>, context: Context) {
 
     Box(modifier = Modifier.fillMaxWidth()) {
 
@@ -208,11 +222,15 @@ fun LoadAllElixirs(elixirList: SnapshotStateList<Elixir>) {
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())) {
 
-            for (elixir in elixirList.take(9)){
+            for ((index, elixir) in elixirList.take(9).withIndex()){
                 CustomElixirCell(
                     elixirName = elixir.name,
                     elixirEffect = elixir.effect
                 )
+
+                if(index == 8){
+                    NavigateToFullListCell(context = context, showMoreWizards = false)
+                }
             }
         }
     }
@@ -240,15 +258,17 @@ fun CustomWizardCell(
 
             Row {
 
-                Text(text = wizardName ?: "",
-                    textAlign = TextAlign.Center,
+                Text (
+                    text = wizardName ?: "",
                     fontSize = 20.sp,
-                    modifier = Modifier.padding(end = 15.dp)
+                    style = TextStyle(fontWeight = FontWeight.Bold),
+                    modifier = if(wizardName != null) Modifier.padding(end = 8.dp) else Modifier.padding(end = 0.dp)
                 )
 
                 Text(text = wizardSurname ?: "",
                     textAlign = TextAlign.Center,
-                    fontSize = 20.sp
+                    fontSize = 20.sp,
+                    style = TextStyle(fontWeight = FontWeight.Bold),
                 )
             }
 
@@ -265,9 +285,7 @@ fun CustomWizardCell(
                     fontSize = 20.sp,
                     modifier = Modifier.padding(end = 15.dp)
                 )
-
             }
-
         }
     }
 }
@@ -281,7 +299,8 @@ fun CustomElixirCell(
     Box(
         modifier = Modifier
             .padding(16.dp)
-            .fillMaxWidth()
+            .width(200.dp)
+            .height(200.dp)
             .background(color = Color.White)
             .border(1.dp, Color.Green, shape = RoundedCornerShape(8.dp))
     ) {
@@ -295,28 +314,72 @@ fun CustomElixirCell(
 
                 Text(text = elixirName ?: "Sin nombre.",
                     textAlign = TextAlign.Center,
-                    fontSize = 20.sp,
+                    fontSize = 25.sp,
+                    style = TextStyle(fontWeight = FontWeight.Bold),
                     modifier = Modifier.padding(end = 15.dp)
                 )
             }
 
             Row {
 
-                Text(text = stringResource(id = R.string.elixir_effect_title),
-                    textAlign = TextAlign.Center,
-                    fontSize = 20.sp,
-                    modifier = Modifier.padding(end = 15.dp)
-                )
-
                 Text(text = elixirEffect ?: "Sin descripción",
                     textAlign = TextAlign.Center,
                     fontSize = 20.sp,
-                    modifier = Modifier.padding(end = 15.dp)
+                    modifier = Modifier.padding(end = 15.dp),
+                    overflow = TextOverflow.Ellipsis
                 )
-
             }
-
         }
     }
+}
 
+@Composable
+fun NavigateToFullListCell(
+    context: Context,
+    showMoreWizards: Boolean
+){
+
+    /**
+     * If show more wizards is false, it means it should show more elixirs
+     */
+
+    val navigateToFullList = if (showMoreWizards) "Navegamos a Magos" else "Navegamos a Elixires"
+
+    Box(
+        modifier =  if(showMoreWizards) {
+            Modifier
+                .padding(16.dp)
+                .width(70.dp)
+                .height(70.dp)
+                .background(color = Color.White)
+                .border(1.dp, Color.Red, shape = RoundedCornerShape(8.dp))
+
+        } else {
+
+            Modifier
+                .padding(16.dp)
+                .width(200.dp)
+                .height(200.dp)
+                .background(color = Color.White)
+                .border(1.dp, Color.Green, shape = RoundedCornerShape(8.dp))
+        }
+    ) {
+        Image(painter = painterResource(id = R.drawable.plus_simbol),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .align(Alignment.Center)
+                .clickable {
+                    Toast
+                        .makeText(
+                            context,
+                            navigateToFullList,
+                            Toast.LENGTH_SHORT
+                        )
+                        .show()
+                }
+        )
+    }
 }
