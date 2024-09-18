@@ -77,7 +77,14 @@ fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Co
                 fontSize = 40.sp
             )
 
-            LoadCoatOfArmsFromEachHouse(houseList, context)
+            if (isHouseListPrepared.value) {
+
+                if(houseList.isEmpty()){
+                    houseList.addAll(viewModel.getAllHouseList())
+                }
+
+                LoadCoatOfArmsFromEachHouse(houseList, context)
+            }
 
             Divider(
                 color = Color.Black,
