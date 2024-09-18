@@ -7,3 +7,9 @@ object Endpoints {
     const val ENDPOINT_INGREDIENTS = "https://wizard-world-api.herokuapp.com/Ingredients/"
     const val ENDPOINT_SPELLS = "https://wizard-world-api.herokuapp.com/Spells/"
 }
+
+enum class ObjectListType {
+    WIZARD,
+    ELIXIR,
+    SPELL
+}

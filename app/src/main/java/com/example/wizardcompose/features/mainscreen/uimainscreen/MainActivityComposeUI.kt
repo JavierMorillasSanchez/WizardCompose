@@ -42,6 +42,7 @@ import com.example.wizardcompose.dataclasses.elixirclasses.Elixir
 import com.example.wizardcompose.dataclasses.houseclasses.House
 import com.example.wizardcompose.dataclasses.wizardclasses.Wizard
 import com.example.wizardcompose.features.mainscreen.viewmodel.MainActivityViewModel
+import com.example.wizardcompose.utils.ObjectListType
 
 @Composable
 fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Context){
@@ -204,7 +205,7 @@ fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>, context: Context) {
                     )
 
                     if(index == 8){
-                        NavigateToFullListCell(context = context, showMoreWizards = true)
+                        NavigateToFullListCell(context = context, ObjectListType.WIZARD)
                     }
                 }
         }
@@ -229,7 +230,7 @@ fun LoadAllElixirs(elixirList: SnapshotStateList<Elixir>, context: Context) {
                 )
 
                 if(index == 8){
-                    NavigateToFullListCell(context = context, showMoreWizards = false)
+                    NavigateToFullListCell(context = context,  ObjectListType.ELIXIR)
                 }
             }
         }
@@ -336,32 +337,31 @@ fun CustomElixirCell(
 @Composable
 fun NavigateToFullListCell(
     context: Context,
-    showMoreWizards: Boolean
+    showMoreListType: ObjectListType
 ){
 
-    /**
-     * If show more wizards is false, it means it should show more elixirs
-     */
-
-    val navigateToFullList = if (showMoreWizards) "Navegamos a Magos" else "Navegamos a Elixires"
+    val navigateToFullList = "Navegamos a $showMoreListType full list"
 
     Box(
-        modifier =  if(showMoreWizards) {
-            Modifier
+        modifier =  when(showMoreListType) {
+            ObjectListType.WIZARD -> Modifier
                 .padding(16.dp)
                 .width(70.dp)
                 .height(70.dp)
                 .background(color = Color.White)
                 .border(1.dp, Color.Red, shape = RoundedCornerShape(8.dp))
 
-        } else {
+            ObjectListType.ELIXIR -> Modifier
+                                        .padding(16.dp)
+                                        .width(200.dp)
+                                        .height(200.dp)
+                                        .background(color = Color.White)
+                                        .border(1.dp, Color.Green, shape = RoundedCornerShape(8.dp))
 
-            Modifier
-                .padding(16.dp)
-                .width(200.dp)
-                .height(200.dp)
-                .background(color = Color.White)
-                .border(1.dp, Color.Green, shape = RoundedCornerShape(8.dp))
+            else -> { Modifier
+                        .padding(0.dp)
+                        .width(0.dp)
+                        .height(0.dp) }
         }
     ) {
         Image(painter = painterResource(id = R.drawable.plus_simbol),
