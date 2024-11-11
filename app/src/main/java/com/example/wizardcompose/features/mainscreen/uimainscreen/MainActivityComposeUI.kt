@@ -1,6 +1,7 @@
 package com.example.wizardcompose.features.mainscreen.uimainscreen
 
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -175,13 +176,10 @@ fun LoadCoatOfArmsFromEachHouse(houseList: SnapshotStateList<House>, context: Co
                                         .weight(1f)
                                         .background(Color.Transparent)
                                         .clickable {
-                                            Toast
-                                                .makeText(
-                                                    context,
-                                                    "Navegamos a las casas",
-                                                    Toast.LENGTH_SHORT
-                                                )
-                                                .show()
+
+                                            
+
+
                                         }
                                 )
                             }
