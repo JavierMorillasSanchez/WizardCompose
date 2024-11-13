@@ -176,10 +176,10 @@ fun LoadCoatOfArmsFromEachHouse(houseList: SnapshotStateList<House>, context: Co
                                         .weight(1f)
                                         .background(Color.Transparent)
                                         .clickable {
-
-                                            
-
-
+                                            Toast.makeText(context,
+                                                "Navegamos a casas pulsando posicion -> $image",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
                                 )
                             }

@@ -13,3 +13,7 @@ enum class ObjectListType {
     ELIXIR,
     SPELL
 }
+
+object  NavigationUtils{
+    const val MAIN_ACTIVITY_ROUTE = ""
+}

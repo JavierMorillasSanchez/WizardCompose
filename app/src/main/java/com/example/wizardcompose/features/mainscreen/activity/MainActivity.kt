@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.example.wizardcompose.features.mainscreen.uimainscreen.MainActivityComposeUIGenerator
 import com.example.wizardcompose.features.mainscreen.viewmodel.MainActivityViewModel
 import com.example.wizardcompose.ui.theme.WizardComposeTheme
+import com.example.wizardcompose.utils.NavigationUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +32,15 @@ class MainActivity : ComponentActivity() {
                     Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
+                    val navController = rememberNavController()
+                    NavHost(navController = navController,
+                        startDestination = NavigationUtils.MAIN_ACTIVITY_ROUTE
+                    ){
+
+                    }
+
+
                     MainActivityComposeUIGenerator(viewModel, this)
                 }
             }
