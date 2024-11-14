@@ -32,15 +32,6 @@ class MainActivity : ComponentActivity() {
                     Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    val navController = rememberNavController()
-                    NavHost(navController = navController,
-                        startDestination = NavigationUtils.MAIN_ACTIVITY_ROUTE
-                    ){
-
-                    }
-
-
                     MainActivityComposeUIGenerator(viewModel, this)
                 }
             }
