@@ -1,7 +1,6 @@
 package com.example.wizardcompose.features.mainscreen.uimainscreen
 
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -44,9 +43,12 @@ import com.example.wizardcompose.dataclasses.houseclasses.House
 import com.example.wizardcompose.dataclasses.wizardclasses.Wizard
 import com.example.wizardcompose.features.mainscreen.viewmodel.MainActivityViewModel
 import com.example.wizardcompose.utils.ObjectListType
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Context){
+fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel  = viewModel()){
+
+    viewModel.initiateViewModel()
 
     val houseList = remember { mutableStateListOf<House>() }
     val isHouseListPrepared = viewModel.getHouseListPreparedValue().observeAsState(initial = false)
@@ -84,7 +86,7 @@ fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Co
                     houseList.addAll(viewModel.getAllHouseList())
                 }
 
-                LoadCoatOfArmsFromEachHouse(houseList, context)
+                LoadCoatOfArmsFromEachHouse()
             }
 
             Divider(
@@ -108,7 +110,7 @@ fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Co
                     wizardList.addAll(viewModel.getAllWizardsList())
                 }
 
-                LoadAllWizards(wizardList, context)
+                LoadAllWizards(wizardList)
             }
 
             Divider(
@@ -132,7 +134,7 @@ fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Co
                     elixirList.addAll(viewModel.getAllElixirList())
                 }
 
-                LoadAllElixirs(elixirList, context)
+                LoadAllElixirs(elixirList)
             }
 
         }
@@ -142,7 +144,7 @@ fun MainActivityComposeUIGenerator(viewModel: MainActivityViewModel, context: Co
 }
 
 @Composable
-fun LoadCoatOfArmsFromEachHouse(houseList: SnapshotStateList<House>, context: Context){
+fun LoadCoatOfArmsFromEachHouse(){
 
     val imageList = listOf(
         R.drawable.griffindor_logo,
@@ -176,10 +178,7 @@ fun LoadCoatOfArmsFromEachHouse(houseList: SnapshotStateList<House>, context: Co
                                         .weight(1f)
                                         .background(Color.Transparent)
                                         .clickable {
-                                            Toast.makeText(context,
-                                                "Navegamos a casas pulsando posicion -> $image",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+
                                         }
                                 )
                             }
@@ -193,7 +192,7 @@ fun LoadCoatOfArmsFromEachHouse(houseList: SnapshotStateList<House>, context: Co
 }
 
 @Composable
-fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>, context: Context) {
+fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>) {
 
     Box(modifier = Modifier.fillMaxWidth()) {
 
@@ -210,7 +209,7 @@ fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>, context: Context) {
                     )
 
                     if(index == 8){
-                        NavigateToFullListCell(context = context, ObjectListType.WIZARD)
+
                     }
                 }
         }
@@ -219,7 +218,7 @@ fun LoadAllWizards(wizardList: SnapshotStateList<Wizard>, context: Context) {
 }
 
 @Composable
-fun LoadAllElixirs(elixirList: SnapshotStateList<Elixir>, context: Context) {
+fun LoadAllElixirs(elixirList: SnapshotStateList<Elixir>) {
 
     Box(modifier = Modifier.fillMaxWidth()) {
 
@@ -235,7 +234,7 @@ fun LoadAllElixirs(elixirList: SnapshotStateList<Elixir>, context: Context) {
                 )
 
                 if(index == 8){
-                    NavigateToFullListCell(context = context,  ObjectListType.ELIXIR)
+
                 }
             }
         }

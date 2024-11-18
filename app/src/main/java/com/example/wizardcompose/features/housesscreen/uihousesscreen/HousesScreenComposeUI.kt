@@ -6,13 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.wizardcompose.dataclasses.houseclasses.House
 import com.example.wizardcompose.features.housesscreen.viewmodel.HousesScreenViewModel
 
 @Composable
-fun HousesScreenComposeUIGenerator(viewModel: HousesScreenViewModel, context: Context){
+fun HousesScreenComposeUIGenerator(viewModel: HousesScreenViewModel = viewModel()){
 
-    val logTag = context.javaClass.name
+    viewModel.initiateViewModel()
 
     val houseList = remember { mutableStateListOf<House>() }
     val isHouseListPrepared = viewModel.getHouseListPreparedValue().observeAsState(initial = false)
@@ -22,8 +23,8 @@ fun HousesScreenComposeUIGenerator(viewModel: HousesScreenViewModel, context: Co
         if(houseList.isEmpty()){
             houseList.addAll(viewModel.getAllHouseList())
             for((index,house) in houseList.withIndex()){
-                Log.d(logTag, "Casa Posición -> ${houseList[index]}")
-                Log.d(logTag, "Casa Lista -> ${house.name}")
+                Log.d("logTag", "Casa Posición -> ${houseList[index]}")
+                Log.d("logTag", "Casa Lista -> ${house.name}")
             }
         }
 

@@ -27,7 +27,7 @@ class HousesScreenActivity : ComponentActivity() {
                     Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HousesScreenComposeUIGenerator(viewModel, this)
+                    HousesScreenComposeUIGenerator()
                 }
             }
         }
